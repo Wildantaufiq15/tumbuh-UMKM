@@ -1,0 +1,626 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tumbuh - Platform Pengembangan UMKM</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome untuk icon -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        :root {
+            --primary-color: #18ce84;
+            --dark-bg: #000000;
+            --light-text: #ffffff;
+            --secondary-text: #cccccc;
+            --card-bg: #121212;
+        }
+        
+        body {
+            background-color: var(--dark-bg);
+            color: var(--light-text);
+            font-family: 'Poppins', sans-serif;
+            overflow-x: hidden;
+        }
+        
+        /* Navbar styling */
+        .navbar {
+            background-color: rgba(0, 0, 0, 0.8) !important;
+            padding: 15px 0;
+            transition: all 0.3s ease;
+        }
+        
+        .navbar-brand {
+            color: var(--primary-color) !important;
+            font-weight: 700;
+            font-size: 1.8rem;
+            margin-left: 15px;
+        }
+        
+        .nav-link {
+            color: var(--light-text) !important;
+            margin: 0 10px;
+            font-weight: 500;
+            transition: color 0.3s ease;
+        }
+        
+        .nav-link:hover {
+            color: var(--primary-color) !important;
+        }
+        
+        .navbar-toggler {
+            border: none;
+            color: var(--light-text);
+            margin-right: 15px;
+        }
+        
+        .navbar-toggler:focus {
+            box-shadow: none;
+        }
+        
+        .btn-login {
+            background-color: var(--primary-color);
+            color: var(--dark-bg);
+            border-radius: 30px;
+            padding: 8px 20px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            display: inline-block;
+            margin: 10px 0;
+            text-align: center;
+            width: 100%;
+        }
+        
+        .btn-login:hover {
+            background-color: transparent;
+            border: 1px solid var(--primary-color);
+            color: var(--primary-color);
+        }
+        
+        /* Hero section styling */
+        .hero-section {
+            height: 100vh;
+            background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url('https://images.unsplash.com/photo-1593642632823-8f785ba67e45?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1920&q=80') no-repeat center center/cover;
+            display: flex;
+            align-items: center;
+            position: relative;
+        }
+        
+        .hero-content {
+            max-width: 700px;
+            padding: 0 20px;
+            margin-left: 5%;
+        }
+        
+        .hero-title {
+            font-size: 3.5rem;
+            font-weight: 700;
+            margin-bottom: 20px;
+            line-height: 1.2;
+        }
+        
+        .hero-subtitle {
+            font-size: 1.2rem;
+            margin-bottom: 30px;
+            color: var(--secondary-text);
+        }
+        
+        .btn-explore {
+            background-color: var(--primary-color);
+            color: var(--dark-bg);
+            border-radius: 30px;
+            padding: 12px 30px;
+            font-weight: 600;
+            font-size: 1.1rem;
+            transition: all 0.3s ease;
+        }
+        
+        .btn-explore:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(24, 206, 132, 0.3);
+        }
+        
+        /* Stats Section */
+        .stats-section {
+            padding: 100px 0;
+            background-color: var(--dark-bg);
+        }
+        
+        .section-title {
+            text-align: center;
+            margin-bottom: 60px;
+        }
+        
+        .section-title h2 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 20px;
+            color: var(--light-text);
+        }
+        
+        .section-title p {
+            color: var(--secondary-text);
+            font-size: 1.1rem;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        
+        .stats-card {
+            background: var(--card-bg);
+            border-radius: 15px;
+            padding: 40px 30px;
+            text-align: center;
+            transition: all 0.4s ease;
+            height: 100%;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .stats-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 5px;
+            background: linear-gradient(90deg, var(--primary-color), #0f9b5c);
+            transform: scaleX(0);
+            transform-origin: left;
+            transition: transform 0.4s ease;
+        }
+        
+        .stats-card:hover::before {
+            transform: scaleX(1);
+        }
+        
+        .stats-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(24, 206, 132, 0.15);
+        }
+        
+        .stats-number {
+            font-size: 3.5rem;
+            font-weight: 700;
+            color: var(--primary-color);
+            margin-bottom: 15px;
+            display: block;
+        }
+        
+        .stats-text {
+            font-size: 1.2rem;
+            color: var(--light-text);
+        }
+        
+        /* Masalah Section */
+        .problems-section {
+            padding: 100px 0;
+            background-color: #0a0a0a;
+        }
+        
+        .problem-card {
+            background: var(--card-bg);
+            border-radius: 15px;
+            padding: 40px 30px;
+            transition: all 0.4s ease;
+            height: 100%;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .problem-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 5px;
+            background: linear-gradient(90deg, #ff6b6b, #ff8e8e);
+            transform: scaleX(0);
+            transform-origin: left;
+            transition: transform 0.4s ease;
+        }
+        
+        .problem-card:hover::before {
+            transform: scaleX(1);
+        }
+        
+        .problem-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(255, 107, 107, 0.15);
+        }
+        
+        .problem-card h5 {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 20px;
+            color: #ff6b6b;
+        }
+        
+        .problem-card p {
+            color: var(--secondary-text);
+            font-size: 1.1rem;
+        }
+        
+        /* Solutions Section */
+        .solutions-section {
+            padding: 100px 0;
+            background-color: var(--dark-bg);
+        }
+        
+        .solution-intro {
+            text-align: center;
+            margin-bottom: 60px;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        
+        .solution-intro h3 {
+            font-size: 2rem;
+            font-weight: 700;
+            margin-bottom: 20px;
+            color: var(--primary-color);
+        }
+        
+        .solution-intro p {
+            color: var(--secondary-text);
+            font-size: 1.2rem;
+        }
+        
+        .solution-card {
+            background: var(--card-bg);
+            border-radius: 15px;
+            padding: 40px 30px;
+            text-align: center;
+            transition: all 0.4s ease;
+            height: 100%;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .solution-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 5px;
+            background: linear-gradient(90deg, var(--primary-color), #0f9b5c);
+            transform: scaleX(0);
+            transform-origin: left;
+            transition: transform 0.4s ease;
+        }
+        
+        .solution-card:hover::before {
+            transform: scaleX(1);
+        }
+        
+        .solution-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(24, 206, 132, 0.15);
+        }
+        
+        .solution-card h4 {
+            font-size: 1.8rem;
+            font-weight: 700;
+            margin-bottom: 20px;
+            color: var(--primary-color);
+        }
+        
+        .solution-card p {
+            color: var(--secondary-text);
+            font-size: 1.1rem;
+        }
+        
+        .solution-icon {
+            font-size: 3rem;
+            margin-bottom: 20px;
+            color: var(--primary-color);
+        }
+        
+        /* Animasi untuk cards */
+        @keyframes countUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        .stats-card, .problem-card, .solution-card {
+            animation: countUp 0.8s ease forwards;
+        }
+        
+        .stats-card:nth-child(1), .problem-card:nth-child(1), .solution-card:nth-child(1) {
+            animation-delay: 0.2s;
+        }
+        
+        .stats-card:nth-child(2), .problem-card:nth-child(2), .solution-card:nth-child(2) {
+            animation-delay: 0.4s;
+        }
+        
+        .stats-card:nth-child(3), .solution-card:nth-child(3) {
+            animation-delay: 0.6s;
+        }
+        
+        /* Responsive adjustments */
+        @media (max-width: 992px) {
+            .navbar-collapse {
+                background-color: rgba(0, 0, 0, 0.9);
+                padding: 20px;
+                border-radius: 10px;
+                margin-top: 10px;
+                text-align: center;
+            }
+            
+            .navbar-nav {
+                margin-bottom: 15px;
+            }
+            
+            .hero-title {
+                font-size: 2.5rem;
+            }
+            
+            .stats-number {
+                font-size: 2.8rem;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .stats-card, .problem-card, .solution-card {
+                margin-bottom: 30px;
+            }
+        }
+        
+        @media (max-width: 576px) {
+            .hero-title {
+                font-size: 2rem;
+            }
+            
+            .hero-subtitle {
+                font-size: 1rem;
+            }
+            
+            .hero-content {
+                margin-left: 0;
+                text-align: center;
+            }
+            
+            .stats-number {
+                font-size: 2.5rem;
+            }
+            
+            .stats-text, .problem-card p, .solution-card p {
+                font-size: 1rem;
+            }
+            
+            .section-title h2 {
+                font-size: 2rem;
+            }
+            
+            .solution-intro h3 {
+                font-size: 1.7rem;
+            }
+            
+            .solution-intro p {
+                font-size: 1.1rem;
+            }
+        }
+        .logo-img {
+    height: 40px; /* atur sesuai kebutuhan */
+    width: auto;
+}
+.logo-img {
+    max-height: 45px;
+    width: auto;
+    object-fit: contain;
+}
+
+
+    </style>
+</head>
+<body>
+    <!-- Navigation Bar -->
+    <nav class="navbar navbar-expand-lg navbar-dark fixed-top">
+        <div class="container-fluid">
+           <a class="navbar-brand" href="#">
+             <img src="img/tumbuh putih hijau.png" alt="Tumbuh Logo" class="logo-img">
+         </a>
+
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav mx-auto">
+                    <li class="nav-item">
+                        <a class="nav-link active" href="#">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Academy</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="blog.html">Blog</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Help</a>
+                    </li>
+                </ul>
+                <div class="d-lg-none text-center">
+                    <a href="login.html" class="btn btn-login">Login / Register</a>
+                </div>
+            </div>
+            <div class="d-none d-lg-flex">
+                <a href="login.html" class="btn btn-login">Login / Register</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero-section">
+        <div class="container-fluid">
+            <div class="hero-content">
+                <h1 class="hero-title">Tumbuh: Your solutions for empowering small businesses to grow</h1>
+                <p class="hero-subtitle">Platform edukasi dan finansial untuk membantu UMKM berkembang dan scale up melalui pengetahuan bisnis dan akses modal.</p>
+                <a href="#" class="btn btn-explore">Explore Tumbuh</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Stats Section -->
+    <section class="stats-section">
+        <div class="container">
+            <div class="section-title">
+                <h2>Mengapa UMKM Penting?</h2>
+                <p>UMKM memainkan peran vital dalam perekonomian Indonesia dengan kontribusi yang signifikan</p>
+            </div>
+            <div class="row">
+                <div class="col-md-4 mb-4">
+                    <div class="stats-card">
+                        <h3 class="stats-number">65 Juta</h3>
+                        <p class="stats-text">Jumlah UMKM di Indonesia</p>
+                    </div>
+                </div>
+                <div class="col-md-4 mb-4">
+                    <div class="stats-card">
+                        <h3 class="stats-number">92,65%</h3>
+                        <p class="stats-text">Penyerapan Tenaga Kerja</p>
+                    </div>
+                </div>
+                <div class="col-md-4 mb-4">
+                    <div class="stats-card">
+                        <h3 class="stats-number">61,90%</h3>
+                        <p class="stats-text">Kontribusi PDB</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Problems Section -->
+    <section class="problems-section">
+        <div class="container">
+            <div class="section-title">
+                <h2>Masalah yang Dihadapi UMKM</h2>
+                <p>Berbagai tantangan yang sering menghambat perkembangan usaha mikro, kecil, dan menengah</p>
+            </div>
+            <div class="row">
+                <div class="col-md-6 mb-4">
+                    <div class="problem-card">
+                        <h5>Kurangnya Pengetahuan</h5>
+                        <p>UMKM sering kesulitan dalam hal pemasaran, branding, serta pemanfaatan teknologi digital. Produk bagus sekalipun bisa tenggelam kalau tidak punya strategi pemasaran yang tepat dan akses ke pasar yang lebih luas.</p>
+                    </div>
+                </div>
+                <div class="col-md-6 mb-4">
+                    <div class="problem-card">
+                        <h5>Akses Terbatas ke Modal</h5>
+                        <p>Banyak UMKM kesulitan mendapatkan pinjaman atau investasi karena keterbatasan jaminan, kurangnya laporan keuangan yang rapi, serta minimnya literasi keuangan. Akibatnya, mereka sulit memperbesar skala usaha.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Solutions Section -->
+    <section class="solutions-section">
+        <div class="container">
+            <div class="solution-intro">
+                <h3>Bisnis yang kami bangun menyempurnakan siklus UMKM lewat edukasi dan pemodalan</h3>
+                <p>Kami menghadirkan solusi komprehensif untuk mengatasi tantangan yang dihadapi pelaku UMKM</p>
+            </div>
+            <div class="row">
+                <div class="col-md-4 mb-4">
+                    <div class="solution-card">
+                        <div class="solution-icon">
+                            <i class="fas fa-graduation-cap"></i>
+                        </div>
+                        <h4>Edukasi</h4>
+                        <p>Program pembelajaran terstruktur untuk meningkatkan pengetahuan bisnis, pemasaran digital, dan manajemen keuangan UMKM.</p>
+                    </div>
+                </div>
+                <div class="col-md-4 mb-4">
+                    <div class="solution-card">
+                        <div class="solution-icon">
+                            <i class="fas fa-handshake"></i>
+                        </div>
+                        <h4>Konsultasi</h4>
+                        <p>Layanan konsultasi one-on-one dengan ahli bisnis untuk membantu menyelesaikan masalah spesifik yang dihadapi UMKM.</p>
+                    </div>
+                </div>
+                <div class="col-md-4 mb-4">
+                    <div class="solution-card">
+                        <div class="solution-icon">
+                            <i class="fas fa-hand-holding-usd"></i>
+                        </div>
+                        <h4>Pendanaan</h4>
+                        <p>Akses ke berbagai skema pendanaan yang sesuai dengan kebutuhan UMKM, dari pinjaman hingga investasi.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+      <footer>
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-4 mb-4">
+                    <h4 class="text-primary">TUMBUH</h4>
+                    <p>Platform yang mendukung perkembangan UMKM dari segi edukasi dan finansial.</p>
+                </div>
+                <div class="col-lg-2 col-md-4 mb-4">
+                    <h5>Menu</h5>
+                    <ul class="list-unstyled">
+                        <li><a href="#" class="text-decoration-none text-light">Home</a></li>
+                        <li><a href="#" class="text-decoration-none text-light">Academy</a></li>
+                        <li><a href="#blog" class="text-decoration-none text-light">Blog</a></li>
+                        <li><a href="#" class="text-decoration-none text-light">Help</a></li>
+                    </ul>
+                </div>
+                <div class="col-lg-2 col-md-4 mb-4">
+                    <h5>Layanan</h5>
+                    <ul class="list-unstyled">
+                        <li><a href="#" class="text-decoration-none text-light">Edukasi</a></li>
+                        <li><a href="#" class="text-decoration-none text-light">Konsultasi</a></li>
+                        <li><a href="#" class="text-decoration-none text-light">Pendanaan</a></li>
+                    </ul>
+                </div>
+                <div class="col-lg-4 col-md-4 mb-4">
+                    <h5>Hubungi Kami</h5>
+                    <p>info@tumbuh.id<br>+62 21 1234 5678</p>
+                    <div class="social-icons">
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-facebook"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-linkedin"></i></a>
+                    </div>
+                </div>
+            </div>
+            <hr class="mt-4">
+            <div class="text-center py-3">
+                <p>&copy; 2023 TUMBUH. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Bootstrap & jQuery JS -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+    
+    <script>
+        // Navbar scroll effect
+        $(window).scroll(function() {
+            if ($(window).scrollTop() > 50) {
+                $('.navbar').addClass('scrolled');
+            } else {
+                $('.navbar').removeClass('scrolled');
+            }
+        });
+    </script>
+</body>
+</html>

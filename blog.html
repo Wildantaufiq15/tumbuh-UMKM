@@ -1,0 +1,678 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Blog - TUMBUH Platform UMKM</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #18ce84;
+            --dark-bg: #121212;
+            --card-bg: #1e1e1e;
+            --text-color: #f8f9fa;
+        }
+        
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: var(--dark-bg);
+            color: var(--text-color);
+            overflow-x: hidden;
+        }
+        
+        .navbar {
+            background-color: rgba(0, 0, 0, 0.9) !important;
+            padding: 15px 0;
+        }
+        
+        .navbar-brand {
+            color: var(--primary-color) !important;
+            font-weight: 700;
+            font-size: 1.8rem;
+        }
+        
+        .nav-link {
+            color: var(--text-color) !important;
+            margin: 0 15px;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+        
+        .nav-link:hover {
+            color: var(--primary-color) !important;
+        }
+        
+        .navbar-toggler {
+            border: none;
+            color: var(--text-color);
+        }
+        
+        /* Tombol Custom (sama dengan home page) */
+        .btn-custom {
+            background-color: var(--primary-color);
+            color: #000000;
+            border-radius: 30px;
+            padding: 8px 20px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            border: none;
+        }
+        
+        .btn-custom:hover {
+            background-color: transparent;
+            border: 1px solid var(--primary-color);
+            color: var(--primary-color);
+        }
+        
+        .btn-outline-custom {
+            background-color: transparent;
+            color: var(--text-color);
+            border: 1px solid var(--text-color);
+            border-radius: 30px;
+            padding: 8px 20px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+        
+        .btn-outline-custom:hover {
+            background-color: var(--primary-color);
+            border-color: var(--primary-color);
+            color: #000000;
+        }
+        
+        .blog-hero {
+            background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url('https://images.unsplash.com/photo-1499951360447-b19be8fe80f5?ixlib=rb-4.0.3&auto=format&fit=crop&w=1170&q=80') no-repeat center center/cover;
+            padding: 120px 0 80px;
+            text-align: center;
+        }
+        
+        .blog-hero h1 {
+            font-size: 3rem;
+            font-weight: 700;
+            margin-bottom: 20px;
+        }
+        
+        .blog-hero p {
+            font-size: 1.2rem;
+            max-width: 700px;
+            margin: 0 auto;
+        }
+        
+        .blog-card {
+            background-color: var(--card-bg);
+            border-radius: 15px;
+            overflow: hidden;
+            transition: transform 0.3s;
+            height: 100%;
+            border: 1px solid #2e2e2e;
+            margin-bottom: 30px;
+        }
+        
+        .blog-card:hover {
+            transform: translateY(-10px);
+        }
+        
+        .blog-img {
+            height: 200px;
+            overflow: hidden;
+        }
+        
+        .blog-img img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s;
+        }
+        
+        .blog-card:hover .blog-img img {
+            transform: scale(1.1);
+        }
+        
+        .blog-content {
+            padding: 20px;
+        }
+        
+        .blog-date {
+            color: var(--primary-color);
+            font-size: 0.9rem;
+            margin-bottom: 10px;
+        }
+        
+        .blog-title {
+            font-size: 1.3rem;
+            margin-bottom: 10px;
+            color: var(--text-color);
+            font-weight: 600;
+        }
+        
+        .blog-excerpt {
+            color: #aaa;
+            font-size: 0.95rem;
+            margin-bottom: 15px;
+        }
+        
+        .read-more {
+            color: var(--primary-color);
+            text-decoration: none;
+            font-weight: 500;
+            display: inline-flex;
+            align-items: center;
+        }
+        
+        .read-more:hover {
+            color: #14b471;
+        }
+        
+        .read-more i {
+            margin-left: 5px;
+            transition: transform 0.3s;
+        }
+        
+        .read-more:hover i {
+            transform: translateX(5px);
+        }
+        
+        .sidebar {
+            background-color: var(--card-bg);
+            border-radius: 15px;
+            padding: 25px;
+            margin-bottom: 30px;
+            border: 1px solid #2e2e2e;
+        }
+        
+        .sidebar-title {
+            font-size: 1.4rem;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid var(--primary-color);
+            color: var(--primary-color);
+        }
+        
+        .categories-list {
+            list-style: none;
+            padding: 0;
+        }
+        
+        .categories-list li {
+            margin-bottom: 10px;
+        }
+        
+        .categories-list a {
+            color: var(--text-color);
+            text-decoration: none;
+            display: flex;
+            justify-content: space-between;
+            transition: color 0.3s;
+        }
+        
+        .categories-list a:hover {
+            color: var(--primary-color);
+        }
+        
+        .categories-list span {
+            background-color: var(--primary-color);
+            color: var(--dark-bg);
+            font-size: 0.8rem;
+            padding: 2px 8px;
+            border-radius: 10px;
+        }
+        
+        .popular-post {
+            display: flex;
+            margin-bottom: 15px;
+        }
+        
+        .popular-post-img {
+            width: 80px;
+            height: 80px;
+            border-radius: 8px;
+            overflow: hidden;
+            margin-right: 15px;
+        }
+        
+        .popular-post-img img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        
+        .popular-post-content h5 {
+            font-size: 1rem;
+            margin-bottom: 5px;
+        }
+        
+        .popular-post-content .blog-date {
+            font-size: 0.8rem;
+        }
+        
+        .tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+        
+        .tag {
+            background-color: #2a2a2a;
+            color: var(--text-color);
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            transition: background-color 0.3s;
+        }
+        
+        .tag:hover {
+            background-color: var(--primary-color);
+            color: var(--dark-bg);
+        }
+        
+        .newsletter-form {
+            margin-top: 20px;
+        }
+        
+        .form-control {
+            background-color: #2a2a2a;
+            border: none;
+            color: var(--text-color);
+            margin-bottom: 10px;
+        }
+        
+        .form-control:focus {
+            box-shadow: 0 0 0 2px var(--primary-color);
+        }
+        
+        .btn-subscribe {
+            background-color: var(--primary-color);
+            color: var(--dark-bg);
+            border: none;
+            width: 100%;
+            padding: 10px;
+            border-radius: 5px;
+            font-weight: 600;
+            transition: background-color 0.3s;
+        }
+        
+        .btn-subscribe:hover {
+            background-color: #14b471;
+        }
+        
+        .pagination {
+            justify-content: center;
+            margin-top: 40px;
+        }
+        
+        .page-link {
+            background-color: var(--card-bg);
+            border: 1px solid #2e2e2e;
+            color: var(--text-color);
+            margin: 0 5px;
+            border-radius: 5px;
+        }
+        
+        .page-link:hover {
+            background-color: var(--primary-color);
+            border-color: var(--primary-color);
+            color: var(--dark-bg);
+        }
+        
+        .page-item.active .page-link {
+            background-color: var(--primary-color);
+            border-color: var(--primary-color);
+            color: var(--dark-bg);
+        }
+        
+        footer {
+            background-color: #0a0a0a;
+            padding: 50px 0 20px;
+            margin-top: 80px;
+        }
+        
+        .social-icons a {
+            color: var(--text-color);
+            font-size: 1.5rem;
+            margin-right: 15px;
+            transition: color 0.3s;
+        }
+        
+        .social-icons a:hover {
+            color: var(--primary-color);
+        }
+        
+        /* Animation for blog cards */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .blog-card {
+            animation: fadeIn 0.6s ease forwards;
+        }
+        
+        .delay-1 { animation-delay: 0.1s; }
+        .delay-2 { animation-delay: 0.2s; }
+        .delay-3 { animation-delay: 0.3s; }
+        .delay-4 { animation-delay: 0.4s; }
+        .delay-5 { animation-delay: 0.5s; }
+        .delay-6 { animation-delay: 0.6s; }
+        
+        /* Responsive adjustments */
+        @media (max-width: 768px) {
+            .blog-hero {
+                padding: 100px 0 60px;
+            }
+            
+            .blog-hero h1 {
+                font-size: 2.2rem;
+            }
+            
+            .blog-hero p {
+                font-size: 1rem;
+            }
+            
+            .navbar .btn-custom,
+            .navbar .btn-outline-custom {
+                margin: 5px 0;
+                width: 100%;
+            }
+        }
+           .logo-img {
+    height: 40px; /* atur sesuai kebutuhan */
+    width: auto;
+}
+.logo-img {
+    max-height: 45px;
+    width: auto;
+    object-fit: contain;
+}
+    </style>
+</head>
+<body>
+    <!-- Navigation Bar -->
+    <nav class="navbar navbar-expand-lg navbar-dark fixed-top">
+        <div class="container">
+            <a class="navbar-brand" href="#">
+             <img src="img/tumbuh putih hijau.png" alt="Tumbuh Logo" class="logo-img">
+         </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse justify-content-center" id="navbarNav">
+                <ul class="navbar-nav">
+                    <li class="nav-item">
+                        <a class="nav-link" href="home.html">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="login.html">Academy</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" href="blog.html">Blog</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Help</a>
+                    </li>
+                </ul>
+            </div>
+            <div class="d-none d-lg-block">
+                <button class="btn btn-outline-custom me-2">Login</button>
+                <button class="btn btn-custom">Register</button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Blog Hero Section -->
+    <section class="blog-hero">
+        <div class="container">
+            <h1>Blog TUMBUH</h1>
+            <p>Artikel dan berita terkini seputar UMKM, strategi bisnis, pemasaran digital, dan perkembangan ekonomi</p>
+        </div>
+    </section>
+
+    <!-- Blog Content -->
+    <section class="py-5">
+        <div class="container">
+            <div class="row">
+                <!-- Main Blog Content -->
+                <div class="col-lg-8">
+                    <div class="row">
+                        <!-- Blog Post 1 -->
+                        <div class="col-md-6 blog-card delay-1">
+                            <div class="blog-card">
+                                <div class="blog-img">
+                                    <img src="https://images.unsplash.com/photo-1556761175-5973dc0f32e7?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Strategi Pemasaran Digital">
+                                </div>
+                                <div class="blog-content">
+                                    <div class="blog-date">15 Agustus 2023</div>
+                                    <h3 class="blog-title">Strategi Pemasaran Digital untuk UMKM di Era Modern</h3>
+                                    <p class="blog-excerpt">Pelajari cara memanfaatkan platform digital untuk meningkatkan penjualan dan memperluas jangkauan pasar.</p>
+                                    <a href="#" class="read-more">Baca selengkapnya <i class="fas fa-arrow-right"></i></a>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Blog Post 2 -->
+                        <div class="col-md-6 blog-card delay-2">
+                            <div class="blog-card">
+                                <div class="blog-img">
+                                    <img src="https://images.unsplash.com/photo-1554224155-6726b3ff858f?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Mengelola Keuangan UMKM">
+                                </div>
+                                <div class="blog-content">
+                                    <div class="blog-date">12 Agustus 2023</div>
+                                    <h3 class="blog-title">Cara Mengelola Keuangan UMKM dengan Bijak</h3>
+                                    <p class="blog-excerpt">Tips dan trik mengatur arus kas, pembukuan, dan perencanaan keuangan untuk kelangsungan usaha.</p>
+                                    <a href="#" class="read-more">Baca selengkapnya <i class="fas fa-arrow-right"></i></a>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Blog Post 3 -->
+                        <div class="col-md-6 blog-card delay-3">
+                            <div class="blog-card">
+                                <div class="blog-img">
+                                    <img src="https://images.unsplash.com/photo-1560472355-536de3962603?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Inovasi Produk UMKM">
+                                </div>
+                                <div class="blog-content">
+                                    <div class="blog-date">10 Agustus 2023</div>
+                                    <h3 class="blog-title">Inovasi Produk: Kunci UMKM Bersaing di Pasar Global</h3>
+                                    <p class="blog-excerpt">Bagaimana terus berinovasi dengan produk dan layanan untuk tetap relevan dan kompetitif.</p>
+                                    <a href="#" class="read-more">Baca selengkapnya <i class="fas fa-arrow-right"></i></a>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Blog Post 4 -->
+                        <div class="col-md-6 blog-card delay-4">
+                            <div class="blog-card">
+                                <div class="blog-img">
+                                    <img src="https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Media Sosial untuk Branding">
+                                </div>
+                                <div class="blog-content">
+                                    <div class="blog-date">7 Agustus 2023</div>
+                                    <h3 class="blog-title">Memanfaatkan Media Sosial untuk Branding UMKM</h3>
+                                    <p class="blog-excerpt">Strategi efektif membangun merek melalui platform media sosial yang tepat untuk target pasar.</p>
+                                    <a href="#" class="read-more">Baca selengkapnya <i class="fas fa-arrow-right"></i></a>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Blog Post 5 -->
+                        <div class="col-md-6 blog-card delay-5">
+                            <div class="blog-card">
+                                <div class="blog-img">
+                                    <img src="https://images.unsplash.com/photo-1573164713714-d95e436ab8d6?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Panduan Ekspor UMKM">
+                                </div>
+                                <div class="blog-content">
+                                    <div class="blog-date">5 Agustus 2023</div>
+                                    <h3 class="blog-title">Panduan Lengkap Ekspor untuk UMKM Indonesia</h3>
+                                    <p class="blog-excerpt">Langkah demi langkah mempersiapkan produk untuk masuk ke pasar internasional.</p>
+                                    <a href="#" class="read-more">Baca selengkapnya <i class="fas fa-arrow-right"></i></a>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Blog Post 6 -->
+                        <div class="col-md-6 blog-card delay-6">
+                            <div class="blog-card">
+                                <div class="blog-img">
+                                    <img src="https://images.unsplash.com/photo-1578575437130-527eed3abbec?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Kisah Sukses UMKM">
+                                </div>
+                                <div class="blog-content">
+                                    <div class="blog-date">1 Agustus 2023</div>
+                                    <h3 class="blog-title">Kisah Sukses UMKM yang Berhasil Scale Up</h3>
+                                    <p class="blog-excerpt">Inspirasi dari pelaku UMKM yang berhasil mengembangkan usahanya ke tingkat yang lebih besar.</p>
+                                    <a href="#" class="read-more">Baca selengkapnya <i class="fas fa-arrow-right"></i></a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Pagination -->
+                    <nav aria-label="Blog pagination">
+                        <ul class="pagination">
+                            <li class="page-item disabled">
+                                <a class="page-link" href="#" tabindex="-1" aria-disabled="true">Previous</a>
+                            </li>
+                            <li class="page-item active"><a class="page-link" href="#">1</a></li>
+                            <li class="page-item"><a class="page-link" href="#">2</a></li>
+                            <li class="page-item"><a class="page-link" href="#">3</a></li>
+                            <li class="page-item">
+                                <a class="page-link" href="#">Next</a>
+                            </li>
+                        </ul>
+                    </nav>
+                </div>
+                
+                <!-- Sidebar -->
+                <div class="col-lg-4">
+                    <!-- Search Widget -->
+                    <div class="sidebar">
+                        <h4 class="sidebar-title">Cari Artikel</h4>
+                        <div class="input-group mb-3">
+                            <input type="text" class="form-control" placeholder="Kata kunci...">
+                            <button class="btn btn-custom" type="button">Cari</button>
+                        </div>
+                    </div>
+                    
+                    <!-- Categories Widget -->
+                    <div class="sidebar">
+                        <h4 class="sidebar-title">Kategori</h4>
+                        <ul class="categories-list">
+                            <li><a href="#">Pemasaran Digital <span>12</span></a></li>
+                            <li><a href="#">Manajemen Keuangan <span>8</span></a></li>
+                            <li><a href="#">Strategi Bisnis <span>15</span></a></li>
+                            <li><a href="#">Teknologi UMKM <span>9</span></a></li>
+                            <li><a href="#">Kisah Sukses <span>7</span></a></li>
+                        </ul>
+                    </div>
+                    
+                    <!-- Popular Posts Widget -->
+                    <div class="sidebar">
+                        <h4 class="sidebar-title">Populer</h4>
+                        <div class="popular-post">
+                            <div class="popular-post-img">
+                                <img src="https://images.unsplash.com/photo-1556761175-5973dc0f32e7?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80" alt="Popular Post">
+                            </div>
+                            <div class="popular-post-content">
+                                <h5>Strategi Pemasaran Digital untuk UMKM</h5>
+                                <div class="blog-date">15 Agustus 2023</div>
+                            </div>
+                        </div>
+                        <div class="popular-post">
+                            <div class="popular-post-img">
+                                <img src="https://images.unsplash.com/photo-1554224155-6726b3ff858f?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80" alt="Popular Post">
+                            </div>
+                            <div class="popular-post-content">
+                                <h5>Cara Mengelola Keuangan UMKM dengan Bijak</h5>
+                                <div class="blog-date">12 Agustus 2023</div>
+                            </div>
+                        </div>
+                        <div class="popular-post">
+                            <div class="popular-post-img">
+                                <img src="https://images.unsplash.com/photo-1560472355-536de3962603?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80" alt="Popular Post">
+                            </div>
+                            <div class="popular-post-content">
+                                <h5>Inovasi Produk: Kunci UMKM Bersaing</h5>
+                                <div class="blog-date">10 Agustus 2023</div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Tags Widget -->
+                    <div class="sidebar">
+                        <h4 class="sidebar-title">Tags</h4>
+                        <div class="tags">
+                            <a href="#" class="tag">#Pemasaran</a>
+                            <a href="#" class="tag">#Keuangan</a>
+                            <a href="#" class="tag">#Digital</a>
+                            <a href="#" class="tag">#Ekspor</a>
+                            <a href="#" class="tag">#Inovasi</a>
+                            <a href="#" class="tag">#Strategi</a>
+                            <a href="#" class="tag">#Teknologi</a>
+                            <a href="#" class="tag">#UMKM</a>
+                        </div>
+                    </div>
+                    
+                    <!-- Newsletter Widget -->
+                    <div class="sidebar">
+                        <h4 class="sidebar-title">Newsletter</h4>
+                        <p>Berlangganan newsletter kami untuk mendapatkan update artikel terbaru seputar UMKM.</p>
+                        <form class="newsletter-form">
+                            <input type="email" class="form-control" placeholder="Alamat email Anda">
+                            <button type="submit" class="btn-subscribe">Berlangganan</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-4 mb-4">
+                    <h4 class="text-primary">TUMBUH</h4>
+                    <p>Platform yang mendukung perkembangan UMKM dari segi edukasi dan finansial.</p>
+                </div>
+                <div class="col-lg-2 col-md-4 mb-4">
+                    <h5>Menu</h5>
+                    <ul class="list-unstyled">
+                        <li><a href="index.html" class="text-decoration-none text-light">Home</a></li>
+                        <li><a href="#" class="text-decoration-none text-light">Academy</a></li>
+                        <li><a href="blog.html" class="text-decoration-none text-light">Blog</a></li>
+                        <li><a href="#" class="text-decoration-none text-light">Help</a></li>
+                    </ul>
+                </div>
+                <div class="col-lg-2 col-md-4 mb-4">
+                    <h5>Layanan</h5>
+                    <ul class="list-unstyled">
+                        <li><a href="#" class="text-decoration-none text-light">Edukasi</a></li>
+                        <li><a href="#" class="text-decoration-none text-light">Konsultasi</a></li>
+                        <li><a href="#" class="text-decoration-none text-light">Pendanaan</a></li>
+                    </ul>
+                </div>
+                <div class="col-lg-4 col-md-4 mb-4">
+                    <h5>Hubungi Kami</h5>
+                    <p>info@tumbuh.id<br>+62 21 1234 5678</p>
+                    <div class="social-icons">
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-facebook"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-linkedin"></i></a>
+                    </div>
+                </div>
+            </div>
+            <hr class="mt-4">
+            <div class="text-center py-3">
+                <p>&copy; 2023 TUMBUH. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

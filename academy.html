@@ -1,0 +1,531 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>UMKM Grow - Academy</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary-color: #18CE84;
+            --primary-dark: #14b877;
+            --bg-dark: #121212;
+            --card-dark: #1E1E1E;
+            --text-light: #F5F5F5;
+            --text-gray: #BDBDBD;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            padding-bottom: 80px;
+            background-color: var(--bg-dark);
+            color: var(--text-light);
+        }
+        
+        /* Header Styles */
+        .top-header {
+            background-color: var(--bg-dark);
+            padding: 15px 15px 10px;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+        
+        .greeting {
+            font-size: 1.2rem;
+            margin-bottom: 5px;
+        }
+        
+        .sub-greeting {
+            color: var(--text-gray);
+            font-size: 0.9rem;
+        }
+        
+        .profile-pic {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 2px solid var(--primary-color);
+        }
+        
+        /* Card Styles */
+        .card-dark {
+            background-color: var(--card-dark);
+            border-radius: 16px;
+            border: none;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+            margin-bottom: 15px;
+        }
+        
+        /* Academy Nav Icon Animation */
+        .nav-icon-academy {
+            transition: all 0.3s ease;
+        }
+        
+        .nav-item:hover .nav-icon-academy {
+            transform: translateY(-3px) scale(1.1);
+            color: var(--primary-color);
+        }
+        
+        /* Academy Hero Section */
+        .academy-hero {
+            background: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)), 
+                        url('https://images.unsplash.com/photo-1522202176988-66273c2fd55f?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1200&q=80');
+            background-size: cover;
+            background-position: center;
+            border-radius: 16px;
+            padding: 30px 15px;
+            text-align: center;
+            margin-bottom: 15px;
+        }
+        
+        .academy-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 10px;
+        }
+        
+        .btn-try {
+            background-color: var(--primary-color);
+            color: var(--bg-dark);
+            border: none;
+            border-radius: 12px;
+            padding: 12px 25px;
+            font-weight: 600;
+            margin-top: 15px;
+            transition: all 0.3s;
+            font-size: 0.9rem;
+        }
+        
+        .btn-try:hover {
+            background-color: var(--primary-dark);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(24, 206, 132, 0.3);
+        }
+        
+        /* Academy Options */
+        .options-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 10px;
+            margin: 15px 0;
+        }
+        
+        .option-card {
+            background-color: var(--card-dark);
+            border-radius: 12px;
+            padding: 15px 10px;
+            text-align: center;
+            transition: all 0.3s;
+        }
+        
+        .option-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 12px rgba(0,0,0,0.2);
+        }
+        
+        .option-icon {
+            font-size: 1.3rem;
+            color: var(--primary-color);
+            margin-bottom: 8px;
+        }
+        
+        .option-card h6 {
+            font-size: 0.9rem;
+            margin-bottom: 0;
+        }
+        
+        /* Sessions Section */
+        .sessions-tabs {
+            display: flex;
+            border-bottom: 1px solid #333;
+            margin-bottom: 15px;
+            overflow-x: auto;
+        }
+        
+        .session-tab {
+            padding: 8px 15px;
+            cursor: pointer;
+            position: relative;
+            white-space: nowrap;
+            font-size: 0.9rem;
+        }
+        
+        .session-tab.active {
+            color: var(--primary-color);
+        }
+        
+        .session-tab.active:after {
+            content: '';
+            position: absolute;
+            bottom: -1px;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background-color: var(--primary-color);
+        }
+        
+        .session-item {
+            display: flex;
+            flex-direction: column;
+            padding: 12px 0;
+            border-bottom: 1px solid #333;
+        }
+        
+        .session-info {
+            margin-bottom: 8px;
+        }
+        
+        .session-date {
+            color: var(--text-gray);
+            font-size: 0.8rem;
+            display: flex;
+            justify-content: space-between;
+        }
+        
+        /* Class Selection */
+        .class-select {
+            margin-top: 20px;
+        }
+        
+        .select-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+        
+        .select-header h5 {
+            font-size: 1.1rem;
+            margin-bottom: 0;
+        }
+        
+        .btn-filter {
+            background-color: transparent;
+            color: var(--primary-color);
+            border: 1px solid var(--primary-color);
+            border-radius: 8px;
+            padding: 5px 10px;
+            font-size: 0.8rem;
+        }
+        
+        .category-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 10px;
+        }
+        
+        .category-card {
+            height: 100px;
+            border-radius: 12px;
+            overflow: hidden;
+            position: relative;
+            transition: all 0.3s;
+        }
+        
+        .category-bg {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            opacity: 0.8;
+        }
+        
+        .category-overlay {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: linear-gradient(transparent, rgba(0,0,0,0.7));
+            padding: 8px;
+        }
+        
+        .category-name {
+            font-weight: 500;
+            color: white;
+            margin: 0;
+            font-size: 0.9rem;
+        }
+        
+        /* Bottom Navigation */
+        .bottom-navbar {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background-color: var(--card-dark);
+            padding: 10px 0;
+            z-index: 1000;
+            border-top: 1px solid #333;
+        }
+        
+        .nav-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            color: var(--text-gray);
+            text-decoration: none;
+            font-size: 0.7rem;
+            padding: 0 5px;
+        }
+        
+        .nav-item.active {
+            color: var(--primary-color);
+        }
+        
+        .nav-icon {
+            font-size: 1.2rem;
+            margin-bottom: 3px;
+        }
+        
+        /* Back Button */
+        .btn-back {
+            background-color: transparent;
+            color: var(--primary-color);
+            border: 1px solid var(--primary-color);
+            border-radius: 12px;
+            padding: 8px 15px;
+            font-weight: 600;
+            margin-top: 20px;
+            width: 100%;
+            transition: all 0.3s;
+        }
+        
+        .btn-back:hover {
+            background-color: rgba(24, 206, 132, 0.1);
+        }
+        
+        /* Responsive Breakpoints */
+        @media (min-width: 576px) {
+            .academy-hero {
+                padding: 40px 20px;
+            }
+            
+            .academy-title {
+                font-size: 1.8rem;
+            }
+            
+            .btn-try {
+                padding: 12px 30px;
+                font-size: 1rem;
+            }
+            
+            .options-grid {
+                grid-template-columns: repeat(4, 1fr);
+                gap: 15px;
+            }
+            
+            .category-grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 12px;
+            }
+            
+            .session-item {
+                flex-direction: row;
+                justify-content: space-between;
+                align-items: center;
+            }
+            
+            .session-info {
+                margin-bottom: 0;
+            }
+        }
+        
+        @media (min-width: 768px) {
+            .container {
+                max-width: 720px;
+            }
+            
+            .nav-item {
+                padding: 0 10px;
+            }
+        }
+        
+        @media (min-width: 992px) {
+            .container {
+                max-width: 960px;
+            }
+        }
+        
+        @media (min-width: 1200px) {
+            .container {
+                max-width: 1140px;
+            }
+        }
+        .no-blue {
+  color: inherit;           /* ikut warna teks parent */
+  text-decoration: none;    /* menghilangkan underline */
+}
+    </style>
+</head>
+<body>
+    <!-- Academy Page -->
+    <div class="page active" id="academy-page">
+        <div class="top-header">
+            <div class="container">
+                <div class="d-flex justify-content-between align-items-center">
+                    <div>
+                        <div class="greeting">Academy</div>
+                        <div class="sub-greeting">Tingkatkan pengetahuan bisnis Anda</div>
+                    </div>
+                    <img src="img/_DSC0379 copy.JPEG" alt="Profile" class="profile-pic">
+                </div>
+            </div>
+        </div>
+
+        <div class="container mt-3">
+            <!-- Academy Hero -->
+            <div class="academy-hero card-dark">
+                <h2 class="academy-title">Tumbuh Academy Online</h2>
+                <button class="btn-try">
+                    <i class="fas fa-play-circle me-2"></i>Coba Kelas Sekarang
+                </button>
+            </div>
+            
+            <!-- Academy Options -->
+            <div class="options-grid">
+                <div class="option-card">
+                    <div class="option-icon">
+                        <i class="fas fa-laptop"></i>
+                    </div>
+                    <h6>Kelas Online</h6>
+                </div>
+                <div class="option-card">
+                    <div class="option-icon">
+                        <i class="fas fa-chalkboard-teacher"></i>
+                    </div>
+                    <h6>Sesi Tutor</h6>
+                </div>
+                <div class="option-card">
+                    <div class="option-icon">
+                        <i class="fas fa-book"></i>
+                    </div>
+                    <h6>Materi</h6>
+                </div>
+                <div class="option-card">
+                    <div class="option-icon">
+                        <i class="fas fa-users"></i>
+                    </div>
+                    <h6>Sharing Sosial</h6>
+                </div>
+            </div>
+            
+            <!-- Sessions Section -->
+            <div class="card-dark" style="padding: 20px;">
+                <div class="sessions-tabs">
+                    <div class="session-tab active">Sesi Tersedia</div>
+                    <div class="session-tab">Riwayat Sesi</div>
+                </div>
+                
+                <div class="session-item">
+                    <div class="session-info">
+                        <h6>Fundamental Pemasaran Digital</h6>
+                        <p class="text-muted small">Mentor: Ahmad Fauzi</p>
+                    </div>
+                    <div class="session-date">
+                        <div>Senin</div>
+                        <div>12 Juni 2023</div>
+                    </div>
+                </div>
+                
+                <div class="session-item">
+                    <div class="session-info">
+                        <h6>Manajemen Keuangan UMKM</h6>
+                        <p class="text-muted small">Mentor: Siti Rahma</p>
+                    </div>
+                    <div class="session-date">
+                        <div>Rabu</div>
+                        <div>14 Juni 2023</div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Class Selection -->
+            <div class="card-dark class-select" style="padding: 20px;">
+                <div class="select-header">
+                    <h5>Pilih Kelas</h5>
+                    <button class="btn-filter">
+                        <i class="fas fa-filter me-1"></i>Filter
+                    </button>
+                </div>
+                
+                <div class="category-grid">
+                    <div class="category-card">
+                        <img src="https://images.unsplash.com/photo-1551434678-e076c223a692?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=600&q=80" class="category-bg" alt="Marketing">
+                        <div class="category-overlay">
+                            <p class="category-name">Pemasaran Digital</p>
+                        </div>
+                    </div>
+                    
+                    <div class="category-card">
+                        <img src="https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=600&q=80" class="category-bg" alt="Operation">
+                        <div class="category-overlay">
+                            <p class="category-name">Operasional Bisnis</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <button class="btn-back" onclick="showPage('dashboard-page')">
+                <a class="no-blue" href="user.html">
+                <i class="fas fa-arrow-left me-2"></i>Kembali ke Dashboard
+                </a>
+            </button>
+        </div>
+    </div>
+
+    <!-- Bottom Navigation -->
+    <nav class="bottom-navbar d-md-none">
+        <div class="container">
+            <div class="d-flex justify-content-around">
+                <a href="user.html" class="nav-item" onclick="showPage('dashboard-page')">
+                    <i class="fas fa-home nav-icon"></i>
+                    <span>Dashboard</span>
+                </a>
+                <a href="academy.html" class="nav-item active" onclick="showPage('academy-page')">
+                    <i class="fas fa-graduation-cap nav-icon nav-icon-academy"></i>
+                    <span>Academy</span>
+                </a>
+                <a href="aitumbuh.html" class="nav-item">
+                    <i class="fas fa-robot nav-icon"></i>
+                    <span>AI Chat</span>
+                </a>
+                <a href="profil.html" class="nav-item">
+                    <i class="fas fa-user nav-icon"></i>
+                    <span>Profile</span>
+                </a>
+            </div>
+        </div>
+    </nav>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // Navigation function
+        function showPage(pageId) {
+            document.querySelectorAll('.page').forEach(page => {
+                page.classList.remove('active');
+            });
+            document.getElementById(pageId).classList.add('active');
+            
+            document.querySelectorAll('.nav-item').forEach(item => {
+                item.classList.remove('active');
+            });
+            
+            if(pageId === 'dashboard-page') {
+                document.querySelector('.nav-item[onclick="showPage(\'dashboard-page\')"]').classList.add('active');
+            } else if(pageId === 'academy-page') {
+                document.querySelector('.nav-item[onclick="showPage(\'academy-page\')"]').classList.add('active');
+            }
+        }
+        
+        // Tab switching for sessions
+        document.querySelectorAll('.session-tab').forEach(tab => {
+            tab.addEventListener('click', function() {
+                document.querySelectorAll('.session-tab').forEach(t => t.classList.remove('active'));
+                this.classList.add('active');
+            });
+        });
+    </script>
+</body>
+</html>

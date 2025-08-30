@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>UMGM Grow - AI Chat</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary-color: #18CE84;
+            --primary-dark: #14b877;
+            --bg-dark: #121212;
+            --card-dark: #1E1E1E;
+            --text-light: #F5F5F5;
+            --text-gray: #BDBDBD;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            padding-bottom: 80px;
+            background-color: var(--bg-dark);
+            color: var(--text-light);
+        }
+        
+        /* Header Styles */
+        .ai-header {
+            background-color: var(--bg-dark);
+            padding: 15px;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid #333;
+        }
+        
+        .ai-header-center {
+            flex-grow: 1;
+            text-align: center;
+        }
+        
+        .logo-img {
+            height: 30px;
+            width: auto;
+        }
+        
+        .profile-pic {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 2px solid var(--primary-color);
+        }
+        
+        /* Chat Container */
+        .chat-container {
+            padding: 20px 15px;
+            min-height: calc(100vh - 180px);
+        }
+        
+        .welcome-message {
+            text-align: center;
+            margin: 30px 0;
+        }
+        
+        .welcome-text {
+            font-size: 1.2rem;
+            color: var(--text-light);
+        }
+        
+        .shop-name {
+            color: var(--primary-color);
+            font-weight: 600;
+        }
+        
+        /* Chat Input */
+        .chat-input-container {
+            position: fixed;
+            bottom: 70px;
+            left: 0;
+            right: 0;
+            padding: 15px;
+            background-color: var(--bg-dark);
+            border-top: 1px solid #333;
+        }
+        
+        .chat-input-box {
+            display: flex;
+            background-color: var(--card-dark);
+            border-radius: 12px;
+            padding: 10px 15px;
+            align-items: center;
+        }
+        
+        .chat-input {
+            flex-grow: 1;
+            background: transparent;
+            border: none;
+            color: var(--text-light);
+            padding: 8px;
+        }
+        
+        .chat-input:focus {
+            outline: none;
+        }
+        
+        .send-button {
+            background-color: var(--primary-color);
+            color: var(--bg-dark);
+            border: none;
+            border-radius: 8px;
+            padding: 8px 12px;
+            margin-left: 10px;
+            transition: all 0.3s;
+        }
+        
+        .send-button:hover {
+            background-color: var(--primary-dark);
+            transform: scale(1.05);
+        }
+        
+        /* Bottom Navigation */
+        .bottom-navbar {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background-color: var(--card-dark);
+            padding: 12px 0;
+            z-index: 1000;
+            border-top: 1px solid #333;
+        }
+        
+        .nav-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            color: var(--text-gray);
+            text-decoration: none;
+            font-size: 0.7rem;
+        }
+        
+        .nav-item.active {
+            color: var(--primary-color);
+        }
+        
+        .nav-icon {
+            font-size: 1.4rem;
+            margin-bottom: 3px;
+        }
+
+        /* Chat bubbles */
+        .chat-bubble {
+            max-width: 80%;
+            padding: 12px 16px;
+            border-radius: 18px;
+            margin-bottom: 12px;
+            position: relative;
+        }
+
+        .user-bubble {
+            background-color: var(--primary-color);
+            color: var(--bg-dark);
+            margin-left: auto;
+            border-bottom-right-radius: 4px;
+        }
+
+        .ai-bubble {
+            background-color: var(--card-dark);
+            margin-right: auto;
+            border-bottom-left-radius: 4px;
+            border: 1px solid #333;
+        }
+    </style>
+</head>
+<body>
+    <!-- AI Chat Header -->
+    <div class="ai-header">
+        <div>
+            <i class="fas fa-comment-dots" style="color: var(--primary-color); font-size: 1.5rem;"></i>
+        </div>
+        <div class="ai-header-center">
+            <img src="img/tumbuh hijau.png" alt="Tumbuh Logo" class="logo-img">
+        </div>
+        <div>
+            <img src="img/_DSC0379 copy.JPEG" alt="Profile" class="profile-pic">
+        </div>
+    </div>
+
+    <!-- Chat Content -->
+    <div class="chat-container">
+        <div class="welcome-message">
+            <h4 class="welcome-text">Halo <span class="shop-name">Toko Maju Jaya</span></h4>
+            <p class="text">Tanyakan apa saja kepadaku</p>
+        </div>
+        
+        <!-- Chat messages will appear here dynamically -->
+        <div id="chat-messages"></div>
+    </div>
+
+    <!-- Chat Input -->
+    <div class="chat-input-container">
+        <div class="chat-input-box">
+            <input type="text" class="chat-input" placeholder="Ketik pertanyaan Anda..." id="user-input">
+            <button class="send-button" id="send-button">
+                <i class="fas fa-paper-plane"></i>
+            </button>
+        </div>
+    </div>
+
+    <!-- Bottom Navigation -->
+    <nav class="bottom-navbar d-md-none">
+        <div class="container">
+            <div class="d-flex justify-content-around">
+                <a href="user.html" class="nav-item">
+                    <i class="fas fa-home nav-icon"></i>
+                    <span>Dashboard</span>
+                </a>
+                <a href="academy.html" class="nav-item">
+                    <i class="fas fa-graduation-cap nav-icon"></i>
+                    <span>Academy</span>
+                </a>
+                <a href="aitumbuh.html" class="nav-item active">
+                    <i class="fas fa-robot nav-icon"></i>
+                    <span>AI Chat</span>
+                </a>
+                <a href="profil.html" class="nav-item">
+                    <i class="fas fa-user nav-icon"></i>
+                    <span>Profile</span>
+                </a>
+            </div>
+        </div>
+    </nav>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const userInput = document.getElementById('user-input');
+            const sendButton = document.getElementById('send-button');
+            const chatMessages = document.getElementById('chat-messages');
+            
+            // Function to add a new message to the chat
+            function addMessage(text, isUser) {
+                const messageDiv = document.createElement('div');
+                messageDiv.classList.add('chat-bubble');
+                messageDiv.classList.add(isUser ? 'user-bubble' : 'ai-bubble');
+                messageDiv.textContent = text;
+                
+                chatMessages.appendChild(messageDiv);
+                chatMessages.scrollTop = chatMessages.scrollHeight;
+            }
+            
+            // Sample responses for the AI
+            const aiResponses = {
+                "pemasaran": "Untuk pemasaran UMKM, Anda bisa mencoba strategi digital marketing melalui Instagram dan TikTok. Mau saya jelaskan lebih detail?",
+                "modal": "Kami menyediakan beberapa opsi pendanaan untuk UMKM. Anda bisa mengajukan melalui menu Pendanaan di dashboard.",
+                "legal": "Untuk legalitas usaha, pastikan Anda sudah memiliki NIB (Nomor Induk Berusaha) dan mengurus perizinan sesuai bidang usaha.",
+                "default": "Saya bisa membantu Anda dengan berbagai pertanyaan seputar:\n- Strategi pemasaran\n- Akses permodalan\n- Legalitas UMKM\n- Manajemen operasional\nSilakan tanyakan apa yang ingin Anda ketahui."
+            };
+            
+            // Function to get AI response based on keywords
+            function getAIResponse(question) {
+                const lowerQuestion = question.toLowerCase();
+                
+                if (lowerQuestion.includes('pemasaran') || lowerQuestion.includes('marketing')) {
+                    return aiResponses.pemasaran;
+                } else if (lowerQuestion.includes('modal') || lowerQuestion.includes('dana')) {
+                    return aiResponses.modal;
+                } else if (lowerQuestion.includes('legal') || lowerQuestion.includes('izin')) {
+                    return aiResponses.legal;
+                } else {
+                    return aiResponses.default;
+                }
+            }
+            
+            // Handle send button click
+            sendButton.addEventListener('click', function() {
+                const question = userInput.value.trim();
+                if (question) {
+                    addMessage(question, true);
+                    userInput.value = '';
+                    
+                    // Show typing indicator
+                    const typingIndicator = document.createElement('div');
+                    typingIndicator.classList.add('chat-bubble', 'ai-bubble');
+                    typingIndicator.innerHTML = '<i class="fas fa-ellipsis-h"></i>';
+                    chatMessages.appendChild(typingIndicator);
+                    chatMessages.scrollTop = chatMessages.scrollHeight;
+                    
+                    // Simulate AI thinking and response
+                    setTimeout(() => {
+                        chatMessages.removeChild(typingIndicator);
+                        const response = getAIResponse(question);
+                        addMessage(response, false);
+                    }, 1500);
+                }
+            });
+            
+            // Handle Enter key
+            userInput.addEventListener('keypress', function(e) {
+                if (e.key === 'Enter') {
+                    sendButton.click();
+                }
+            });
+            
+            // Add initial welcome message from AI
+            setTimeout(() => {
+                addMessage("Halo! Saya asisten Tumbuh Grow. Saya bisa membantu Anda dengan berbagai pertanyaan seputar pengembangan usaha Anda. Ada yang bisa saya bantu?", false);
+            }, 500);
+        });
+    </script>
+</body>
+</html>
